@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +37,22 @@ public class HobbyJpaController {
         hobbyServ.borrarHobby(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/hobby")
-    public void modificarHobby (@RequestBody Hobby hobby) {
+@PutMapping ("/modificar/hobby/{id}")
+    public Hobby modificarHobby (@PathVariable Long id,
+                                     @RequestParam ("hobby") String nuevoHobby,
+                                     @RequestParam ("descripcion") String nuevoDescripcion) {      
+
+
+       Hobby hobby =  hobbyServ.buscarHobby(id);     
+
+             
+        hobby.setHobby(nuevoHobby);
+        hobby.setDescripcion(nuevoDescripcion);
+        
+        
         hobbyServ.crearHobby(hobby);
+       
+        return hobby;
 }
 
 }

@@ -4,6 +4,7 @@ package com.ejemplo.SpringBoot.controller;
 
 import com.ejemplo.SpringBoot.model.Experiencia;
 import com.ejemplo.SpringBoot.service.IExperienciaService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +38,29 @@ public class ExperienciaJpaController {
         expServ.borrarExperiencia(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/experiencia")
-    public void modificarExperiencia (@RequestBody Experiencia exp) {
+@PutMapping ("/modificar/experiencia/{id}")
+    public Experiencia modificarExperiencia (@PathVariable Long id,
+                                     @RequestParam ("organizacion") String nuevoOrganizacion,
+                                     @RequestParam ("posicion") String nuevoPosicion,
+                                     @RequestParam ("descripcion") String nuevoDescripcion,
+                                     @RequestParam ("referencia") String nuevoReferencia,
+                                     @RequestParam ("start") Date nuevoStart,
+                                     @RequestParam ("end") Date nuevoEnd) {      
+
+
+       Experiencia exp =  expServ.buscarExperiencia(id);     
+
+             
+        exp.setOrganizacion(nuevoOrganizacion);
+        exp.setPosicion(nuevoPosicion);
+        exp.setDescripcion(nuevoDescripcion);
+        exp.setReferencia(nuevoReferencia);
+        exp.setStart(nuevoStart);     
+        exp.setEnd(nuevoEnd);   
+        
         expServ.crearExperiencia(exp);
+        
+        return exp;
 }
 
 

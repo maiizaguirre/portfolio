@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +37,24 @@ public class CertificacionJpaController {
         certServ.borrarCertificacion(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/certificacion")
-    public void modificarCertificacion (@RequestBody Certificacion cert) {
+@PutMapping ("/modificar/certificacion/{id}")
+    public Certificacion modificarCertificacion (@PathVariable Long id,
+                                     @RequestParam ("institucion") String nuevoInstitucion,
+                                     @RequestParam ("titulo") String nuevoTitulo,
+                                     @RequestParam ("descripcion") String nuevoDescripcion) {      
+
+
+       Certificacion cert =  certServ.buscarCertificacion(id);     
+
+             
+        cert.setInstitucion(nuevoInstitucion);
+        cert.setTitulo(nuevoTitulo);
+        cert.setDescripcion(nuevoDescripcion);
+        
+        
         certServ.crearCertificacion(cert);
+       
+        return cert;
 }
 
 }

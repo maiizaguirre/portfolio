@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +37,22 @@ public class AptitudJpaController {
         aptServ.borrarAptitud(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/aptitud")
-    public void modificarAptitud (@RequestBody Aptitud apt) {
+@PutMapping ("/modificar/aptitud/{id}")
+    public Aptitud modificarAptitud (@PathVariable Long id,
+                                     @RequestParam ("aptitud") String nuevoAptitud,
+                                     @RequestParam ("descripcion") String nuevoDescripcion) {      
+
+
+       Aptitud apt =  aptServ.buscarAptitud(id);     
+
+             
+        apt.setAptitud(nuevoAptitud);
+        apt.setDescripcion(nuevoDescripcion);
+        
+        
         aptServ.crearAptitud(apt);
+        
+        return apt;
 }
 
 }
