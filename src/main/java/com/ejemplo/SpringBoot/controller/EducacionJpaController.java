@@ -4,6 +4,7 @@ package com.ejemplo.SpringBoot.controller;
 
 import com.ejemplo.SpringBoot.model.Educacion;
 import com.ejemplo.SpringBoot.service.IEducacionService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +38,30 @@ public class EducacionJpaController {
         eduServ.borrarEducacion(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/educacion")
-    public void modificarEducacion (@RequestBody Educacion edu) {
+@PutMapping ("/modificar/educacion/{id}")
+    public Educacion modificarEducacion (@PathVariable Long id,
+                                     @RequestParam ("institucion") String nuevoInstitucion,
+                                     @RequestParam ("titulo") String nuevoTitulo,
+                                     @RequestParam ("descripcion") String nuevoDescripcion,
+                                     @RequestParam ("referencia") String nuevoReferencia,
+                                     @RequestParam ("start") Date nuevoStart,
+                                     @RequestParam ("end") Date nuevoEnd) {      
+
+
+       Educacion edu =  eduServ.buscarEducacion(id);     
+
+             
+        edu.setInstitucion(nuevoInstitucion);
+        edu.setTitulo(nuevoTitulo);
+        edu.setDescripcion(nuevoDescripcion);
+        edu.setReferencia(nuevoReferencia);
+        edu.setStart(nuevoStart);     
+        edu.setEnd(nuevoEnd);  
+        
+        
         eduServ.crearEducacion(edu);
+        
+        return edu;
 }
 
 }

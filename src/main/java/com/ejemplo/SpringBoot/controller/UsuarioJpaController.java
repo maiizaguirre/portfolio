@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +37,23 @@ public class UsuarioJpaController {
         userServ.borrarUsuario(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/usuario")
-    public void modificarUsuario (@RequestBody Usuario user) {
+@PutMapping ("/modificar/usuario/{id}")
+    public Usuario modificarUsuario (@PathVariable Long id,
+                                     @RequestParam ("user") String nuevoUser,
+                                     @RequestParam ("email") String nuevoEmail,
+                                     @RequestParam ("password") String nuevoPassword) {      
+
+
+       Usuario user =  userServ.buscarUsuario(id);     
+
+             
+        user.setUser(nuevoUser);
+        user.setEmail(nuevoEmail);
+        user.setPassword(nuevoPassword);
+        
         userServ.crearUsuario(user);
+       
+        return user;
 }
 
 

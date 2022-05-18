@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +37,22 @@ public class ProyectoJpaController {
         proyServ.borrarProyecto(id);
     }
 
-//agregado mio
-    @PutMapping ("/modificar/proyecto")
-    public void modificarProyecto (@RequestBody Proyecto proy) {
+@PutMapping ("/modificar/proyecto/{id}")
+    public Proyecto modificarProyecto (@PathVariable Long id,
+                                     @RequestParam ("nombre") String nuevoNombre,
+                                     @RequestParam ("descripcion") String nuevoDescripcion) {      
+
+
+       Proyecto proy =  proyServ.buscarProyecto(id);     
+
+             
+        proy.setNombre(nuevoNombre);
+        proy.setDescripcion(nuevoDescripcion);
+        
+        
         proyServ.crearProyecto(proy);
+        
+        return proy;
 }
 
 }
