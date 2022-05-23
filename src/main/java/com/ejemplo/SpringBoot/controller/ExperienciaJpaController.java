@@ -7,6 +7,7 @@ import com.ejemplo.SpringBoot.service.IExperienciaService;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ public class ExperienciaJpaController {
     @Autowired    
     private IExperienciaService expServ;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/new/experiencia")
     public void agregarExperiencia (@RequestBody Experiencia exp) {
         expServ.crearExperiencia(exp);
@@ -33,12 +35,15 @@ public class ExperienciaJpaController {
     public List<Experiencia> verExperiencia () {
        return expServ.verExperiencia();
     }      
+    
+    @PreAuthorize("hasRole('ADMIN')")   
     @DeleteMapping ("/delete/{idExp}")
     public void borrarExperiencia (@PathVariable Long id) {
         expServ.borrarExperiencia(id);
     }
 
-@PutMapping ("/modificar/experiencia/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping ("/modificar/experiencia/{id}")
     public Experiencia modificarExperiencia (@PathVariable Long id,
                                      @RequestParam ("organizacion") String nuevoOrganizacion,
                                      @RequestParam ("posicion") String nuevoPosicion,

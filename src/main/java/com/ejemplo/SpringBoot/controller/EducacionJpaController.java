@@ -7,6 +7,7 @@ import com.ejemplo.SpringBoot.service.IEducacionService;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ public class EducacionJpaController {
     @Autowired    
     private IEducacionService eduServ;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/new/educacion")
     public void agregarEducacion (@RequestBody Educacion edu) {
         eduServ.crearEducacion(edu);
@@ -33,12 +35,15 @@ public class EducacionJpaController {
     public List<Educacion> verEducacion () {
        return eduServ.verEducacion();
     }      
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping ("/delete/{idEdu}")
     public void borrarEducacion (@PathVariable Long id) {
         eduServ.borrarEducacion(id);
     }
 
-@PutMapping ("/modificar/educacion/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping ("/modificar/educacion/{id}")
     public Educacion modificarEducacion (@PathVariable Long id,
                                      @RequestParam ("institucion") String nuevoInstitucion,
                                      @RequestParam ("titulo") String nuevoTitulo,
