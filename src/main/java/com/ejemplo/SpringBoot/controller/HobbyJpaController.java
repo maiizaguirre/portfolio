@@ -6,6 +6,7 @@ import com.ejemplo.SpringBoot.model.Hobby;
 import com.ejemplo.SpringBoot.service.IHobbyService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class HobbyJpaController {
     @Autowired    
     private IHobbyService hobbyServ;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/new/hobby")
     public void agregarHobby (@RequestBody Hobby hobby) {
         hobbyServ.crearHobby(hobby);
@@ -32,12 +34,15 @@ public class HobbyJpaController {
     public List<Hobby> verHobby () {
        return hobbyServ.verHobby();
     }      
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping ("/delete/{idHobby}")
     public void borrarHobby (@PathVariable Long id) {
         hobbyServ.borrarHobby(id);
     }
 
-@PutMapping ("/modificar/hobby/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping ("/modificar/hobby/{id}")
     public Hobby modificarHobby (@PathVariable Long id,
                                      @RequestParam ("hobby") String nuevoHobby,
                                      @RequestParam ("descripcion") String nuevoDescripcion) {      

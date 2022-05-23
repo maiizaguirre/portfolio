@@ -6,6 +6,7 @@ import com.ejemplo.SpringBoot.model.Proyecto;
 import com.ejemplo.SpringBoot.service.IProyectoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class ProyectoJpaController {
     @Autowired    
     private IProyectoService proyServ;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/new/proyecto")
     public void agregarProyecto(@RequestBody Proyecto proy) {
         proyServ.crearProyecto(proy);
@@ -32,12 +34,15 @@ public class ProyectoJpaController {
     public List<Proyecto> verProyecto () {
        return proyServ.verProyecto();
     }      
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping ("/delete/{idProyecto}")
     public void borrarProyecto (@PathVariable Long id) {
         proyServ.borrarProyecto(id);
     }
 
-@PutMapping ("/modificar/proyecto/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping ("/modificar/proyecto/{id}")
     public Proyecto modificarProyecto (@PathVariable Long id,
                                      @RequestParam ("nombre") String nuevoNombre,
                                      @RequestParam ("descripcion") String nuevoDescripcion) {      
