@@ -1,0 +1,50 @@
+{
+    "name": "Marina Izaguirre",
+    "mobile": "+54 9 11 3120 3321",
+    "backImage": "../assets/img/backgorund-image.png",
+    "image": "../assets/img/profile-image.jpg",
+    "position": "Full Stack Developer Jr.",
+    "company": {
+        "name": "",
+        "img": "",
+        "url": "#"
+    },
+    "school": {
+        "name": "",
+        "img": "",
+        "url": "#"
+    },
+    "ubication": "Buenos Aires, Argentina",
+    "about": "Strategic Planning Manager in search of new challenges and professional growth in projects with positive impact.",
+    "experience": [{
+        "position": "Strategic Planning Manager",
+        "company": "FORUM Foros y Conferencias",
+        "img": "",
+        "mode": "",
+        "start": "feb 2019",
+        "end": "actualidad",
+        "timeElapsed": "3 años"
+    }],
+    "education": [{
+        "school": "UBA",
+        "title": "Facultad de Cs. Económicas",
+        "img": "",
+        "career": "Lic. Administración",
+        "score": 0,
+        "start": "2009",
+        "end": "2013"
+    },
+    {
+        "school": "UNSAM",
+        "title": "Escuela de Gobierno",
+        "img": "",
+        "career": "Mg. Relaciones Internacionales",
+        "score": 0,
+        "start": "2020",
+        "end": "2021"
+}],
+"aptitudes": [{
+    "name": "Resolución de problemas",
+    "progress": 75
+}]
+}
